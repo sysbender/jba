@@ -27,4 +27,21 @@
 		<url-pattern>*.json</url-pattern>
 		<url-pattern>*.xml</url-pattern>
 	</servlet-mapping>
+	
+	<!-- add root context -->
+	
+	<!-- needed for ContextLoaderListener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+
+	<!-- Bootstraps the root web application context before servlet initialization -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+
+
 </web-app>
