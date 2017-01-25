@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.voxwalker.jba.entity.Blog;
 import com.voxwalker.jba.entity.User;
+import com.voxwalker.jba.service.BlogService;
 import com.voxwalker.jba.service.UserService;
+
 
 @Controller
 public class UserController {
@@ -20,12 +23,23 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private BlogService blogService;
+	
 	// user is commandName, used to bind form to an object
 	// path is form => attribute in object
 	@ModelAttribute("user")   
-	public User Construct(){
+	public User ConstructUser(){
 		return new User();
 	}
+	
+	// blog
+	@ModelAttribute("blog")   
+	public Blog ConstructBlog(){
+		return new Blog();
+	}	
+	
+	
 	@RequestMapping("/users")
 	public String users(Model model){
 		
@@ -60,6 +74,16 @@ public class UserController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithBlogs(name));
 		return "user-detail";
+	}
+	
+	
+	
+	@RequestMapping( value="/account", method=RequestMethod.POST )
+	public String doAddBlog(@ModelAttribute("blog") Blog blog, Principal principal){
+		String name = principal.getName();
+		blogService.save(blog, name);
+		return "redirect:/account.html";
+		
 	}
 	
 }
