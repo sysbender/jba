@@ -4,8 +4,14 @@
 
 
 
-<div class="container">
+
 	<form:form commandName="user" cssClass="form-horizontal">
+	
+	<c:if test="${param.success eq true}">
+		<div class="alert alert-success"> Registration successful!</div>
+	</c:if>
+	
+	
 		<div class="form-group row">
 			<label for="name" class="col-sm-2  control-label">Name:</label>
 			<div class="col-sm-10">
@@ -35,6 +41,3 @@
 		</div>
 
 	</form:form>
-
-
-</div>

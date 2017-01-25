@@ -1,21 +1,22 @@
 package com.voxwalker.jba.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.voxwalker.jba.entity.Blog;
 import com.voxwalker.jba.entity.Item;
+import com.voxwalker.jba.entity.Role;
 import com.voxwalker.jba.entity.User;
 import com.voxwalker.jba.repository.BlogRepository;
 import com.voxwalker.jba.repository.ItemRepository;
+import com.voxwalker.jba.repository.RoleRepository;
 import com.voxwalker.jba.repository.UserRepository;
 
 @Service
@@ -29,6 +30,10 @@ public class UserService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	
 	public List<User> findAll(){
 		return userRepository.findAll();
@@ -51,7 +56,20 @@ public class UserService {
 	}
 
 	public void save(User user) {
+		user.setEnabled(true);
+		BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+		user.setPassword(bCrypt.encode(user.getPassword()));
+		
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleRepository.findByName("ROLE_USER"));
+		user.setRoles(roles);
+		
 		 userRepository.save(user);
 		
+	}
+
+	public User findOneWithBlogs(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithBlogs(user.getId());
 	}
 }

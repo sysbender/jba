@@ -1,5 +1,6 @@
 package com.voxwalker.jba.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,14 @@ public class UserController {
 	@RequestMapping( value="/register", method=RequestMethod.POST )
 	public String doRegister(@ModelAttribute("user") User user){
 		userService.save(user);
-		return"user-register";
+		return"redirect:/register.html?success=true";
+	}
+	
+	@RequestMapping("/account")
+	public String account(Model model, Principal principal){
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithBlogs(name));
+		return "user-detail";
 	}
 	
 }
