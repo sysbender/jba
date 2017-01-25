@@ -86,5 +86,15 @@ public class InitDbService {
 		item2.setPublishedDate(new Date());
 		
 		itemRepository.save(item2);
+		
+		Item item;
+		for (String title : new String[]{"3", "4","5","6","7","8","9","10","11","12","13","14"}) {
+			System.out.println("title=" + title);
+			item = new Item();
+			item.setBlog(blog1);
+			item.setTitle(title);
+			itemRepository.save(item);
+		}		
+		
 	}
 }
