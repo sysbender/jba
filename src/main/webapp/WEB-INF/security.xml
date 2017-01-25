@@ -10,7 +10,10 @@
 		<intercept-url pattern="/users**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/users/**" access="ROLE_ADMIN" />
 		<form-login login-page="/login.html"/>
-		<logout />
+		<!-- 
+		<logout logout-url="/j_spring_security_logout"/>
+		 -->
+		<logout logout-url="/logout" />
 		<!-- spring security 4 <csrf disabled="true"/> -->
 	</http>
 
