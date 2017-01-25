@@ -42,4 +42,7 @@
 	</bean>
 
 	<jpa:repositories base-package="com.voxwalker.jba.repository"/>
+	
+	<!-- spring security -->
+	<import resource="security.xml"/>
 </beans>
