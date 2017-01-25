@@ -37,4 +37,5 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
 		<put-attribute name="current" value="login" />
 	</definition>
+	
 </tiles-definitions>

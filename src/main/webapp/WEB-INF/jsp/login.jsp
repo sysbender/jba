@@ -4,8 +4,6 @@
 
 
 <style>
-
-
 .form-signin {
 	max-width: 330px;
 	padding: 15px;
@@ -49,27 +47,12 @@
 
 
 
-<form class="form-signin "
-	action='<spring:url value="/j_spring_security_check"/>' method="post">
-
+<form class="form-signin" role="form"
+	action="<spring:url value="/j_spring_security_check" />" method="POST">
 	<h2 class="form-signin-heading">Please sign in</h2>
-
-	<label for="name" class="sr-only">Email address</label> 
-	<input type="text" name="j_username" 
-	id="name" class="form-control" placeholder="Name" required
-		autofocus>
-		
-	<label for="inputPassword" class="sr-only">Password</label> 
-	<input type="password" name="j_password"
-		id="inputPassword" class="form-control" placeholder="Password"
-		required>
-
-	<div class="checkbox">
-		<label> <input type="checkbox" value="remember-me">
-			Remember me
-		</label>
-	</div>
-
+	<input type="text" name="j_username" class="form-control"
+		placeholder="Name" required autofocus> <input type="password"
+		name="j_password" class="form-control" placeholder="Password" required>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
 		in</button>
 </form>

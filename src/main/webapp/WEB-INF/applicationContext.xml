@@ -16,6 +16,7 @@
 
 	<!-- configure db -->
 	<jdbc:embedded-database type="HSQL" id="dataSource"></jdbc:embedded-database>
+	
 
 	<bean
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
