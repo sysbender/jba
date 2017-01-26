@@ -29,51 +29,15 @@ public class UserController {
 	@Autowired
 	private BlogService blogService;
 	
-	// user is commandName, used to bind form to an object
-	// path is form => attribute in object
-	@ModelAttribute("user")   
-	public User ConstructUser(){
-		return new User();
-	}
-	
+
 	// blog
 	@ModelAttribute("blog")   
 	public Blog ConstructBlog(){
 		return new Blog();
 	}	
 	
-	
-	@RequestMapping("/users")
-	public String users(Model model){
-		
-		List<User> users = userService.findAll();
-		model.addAttribute("users", users);
-		System.out.println("users========= controller, find users:  " + users.size());
-		
-		return "users";
-	}
 
-	
-	@RequestMapping("/users/{id}")
-	public String detail(Model model, @PathVariable int id){
-		model.addAttribute("user", userService.findOneWithBlogs(id));
-		return "user-detail";
-	}
-	
-	@RequestMapping("/register")
-	public String showRegister(){
-		System.out.println("--------------- get : register");
-		return "user-register";
-	}
-	
-	@RequestMapping( value="/register", method=RequestMethod.POST )
-	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result){
-		if(result.hasErrors()){
-			return "user-register";
-		}
-		userService.save(user);
-		return"redirect:/register.html?success=true";
-	}
+
 	
 	@RequestMapping("/account")
 	public String account(Model model, Principal principal){
@@ -82,7 +46,7 @@ public class UserController {
 		User user = userService.findOneWithBlogs(name);
 		model.addAttribute("user", user);
 		System.out.println("---------------in account : show user detail - " + user.getName() );
-		return "user-detail";
+		return "account";
 	}
 	
 	
@@ -107,10 +71,5 @@ public class UserController {
 		blogService.delete(blog);
 		return "redirect:/account.html";
 	}
-	
-	@RequestMapping("/users/remove/{id}")
-	public String removeUser(@PathVariable int id){
-		userService.delete(id);
-		return "redirect:/users.html";
-	}
+
 }
