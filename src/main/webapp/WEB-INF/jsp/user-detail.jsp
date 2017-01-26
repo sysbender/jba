@@ -5,7 +5,7 @@
 
 <h1>${user.name }</h1>
 
-<!-- Button trigger modal -->
+<!-- Button trigger modal : add blog-->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
 	data-target="#myModal">New Blog</button>
 
@@ -56,16 +56,15 @@
 
 <br>
 <script type="text/javascript">
-$(document).ready(function() {
-	$('.nav-tabs a:first').tab('show'); // select first tab
-});
-	
+	$(document).ready(function() {
+		$('.nav-tabs a:first').tab('show'); // select first tab
+	});
 </script>
 
 
 <div>
 
-	<!-- Nav tabs -->
+	<!-- Nav tabs : show each blog in a tab-->
 	<ul class="nav nav-tabs">
 
 		<c:forEach items="${user.blogs}" var="blog">
@@ -78,7 +77,9 @@ $(document).ready(function() {
 		<c:forEach items="${user.blogs}" var="blog">
 			<div class="tab-pane" id="blog_${blog.id }">
 				<h1>${blog.name }</h1>
-				<p>${blog.url }</p>
+				
+				<p> <a href="<spring:url value="/blog/remove/${blog.id}.html"/>" class="btn btn-danger">remove blog</a>
+				${blog.url }</p>
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
