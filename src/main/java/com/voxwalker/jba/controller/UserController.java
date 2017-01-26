@@ -3,9 +3,12 @@ package com.voxwalker.jba.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,22 +67,33 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="/register", method=RequestMethod.POST )
-	public String doRegister(@ModelAttribute("user") User user){
+	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result){
+		if(result.hasErrors()){
+			return "user-register";
+		}
 		userService.save(user);
 		return"redirect:/register.html?success=true";
 	}
 	
 	@RequestMapping("/account")
 	public String account(Model model, Principal principal){
+		System.out.println("---------------in account : show user detail");
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithBlogs(name));
+		User user = userService.findOneWithBlogs(name);
+		model.addAttribute("user", user);
+		System.out.println("---------------in account : show user detail - " + user.getName() );
 		return "user-detail";
 	}
 	
 	
 	
 	@RequestMapping( value="/account", method=RequestMethod.POST )
-	public String doAddBlog(@ModelAttribute("blog") Blog blog, Principal principal){
+	public String doAddBlog(Model model, @Valid @ModelAttribute("blog") Blog blog, Principal principal, BindingResult result){
+		if(result.hasErrors()){
+			System.out.println("--------add blog has errors");
+			return account(model, principal);
+		}
+		System.out.println("--------add blog no errors");
 		String name = principal.getName();
 		blogService.save(blog, name);
 		return "redirect:/account.html";
