@@ -3,7 +3,8 @@
 <%@ include file="../layout/taglib.jsp"%>
 
 
-<h1>${user.name }</h1>
+
+<h1><c:out value="${user.name }"/></h1>
 
 <!-- Button trigger modal : add blog-->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
